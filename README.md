@@ -1,3 +1,11 @@
 Dup
 File Duplicate Remover
-version 2017-09-13
+version 2018-06-23
+
+Added:
++ Settings list
+
+WishList:
+- cash directiory
+- select set
+? directory context menu
