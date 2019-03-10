@@ -27,6 +27,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+public slots:
+    void currentFileChanged(QString current);
+
 private slots:
     void timerEvent(QTimerEvent *e);
     void on_pbSelectFile_clicked();
@@ -39,6 +42,8 @@ private slots:
     void on_listWidget_currentRowChanged(int row);
     void on_comboBoxFile_currentTextChanged(const QString &text);
     void on_comboBoxDir_currentTextChanged(const QString &text);
+    void on_pushButtonUp_clicked();
+    void on_pushButtonDown_clicked();
 
 private:
     void block(bool blocked);

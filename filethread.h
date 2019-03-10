@@ -29,6 +29,7 @@ public slots:
 
 signals:
     void done();
+    void currentFileChanged(QString current);
 
 private:
     void run();
@@ -58,6 +59,7 @@ private:
     QMutex mu;
     QString dir;        // директория сканирования
     QString outFile = "out.sha";
+    QString lastFile = outFile;
     QMap<QByteArray,quint64> map;
     QTime time;
     int dt = 0;

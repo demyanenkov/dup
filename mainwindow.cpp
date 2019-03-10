@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->checkBoxSave, SIGNAL(toggled(bool)), filethread, SLOT(setSave(bool)));
     connect(ui->comboBoxFile, SIGNAL(currentTextChanged(QString)), filethread, SLOT(setOutFile(QString)));
     connect(filethread, FileThread::done, [&](){block(false);});
+    connect(filethread, SIGNAL(currentFileChanged(QString)), this, SLOT(currentFileChanged(QString)));
 
     settings = new QSettings("dup.ini", QSettings::IniFormat, this);
     settings->setIniCodec("UTF-8");
@@ -191,4 +192,49 @@ void MainWindow::on_comboBoxDir_currentTextChanged(const QString &text)
 {
     if(index < 0) return;
     list[index].dir = text;
+}
+
+void MainWindow::on_pushButtonUp_clicked()
+{
+    // block on
+    index = -1;
+
+    int row = ui->listWidget->currentRow();
+    if(row > 0)
+    {
+        QString text = ui->listWidget->item(row-1)->text();
+
+        ui->listWidget->item(row-1)->setText(ui->listWidget->item(row)->text());
+        ui->listWidget->item(row)->setText(text);
+        list.swap(row,row-1);
+        ui->listWidget->setCurrentRow(row-1);
+    }
+
+    // block off
+    index = row-1;
+}
+
+void MainWindow::on_pushButtonDown_clicked()
+{
+    // block on
+    index = -1;
+
+    int row = ui->listWidget->currentRow();
+    if(row < ui->listWidget->count()-1)
+    {
+        QString text = ui->listWidget->item(row+1)->text();
+
+        ui->listWidget->item(row+1)->setText(ui->listWidget->item(row)->text());
+        ui->listWidget->item(row)->setText(text);
+        list.swap(row,row+1);
+        ui->listWidget->setCurrentRow(row+1);
+    }
+
+    // block off
+    index = row+1;
+}
+
+void MainWindow::currentFileChanged(QString current)
+{
+    ui->labelCurrent->setText(current);
 }

@@ -89,6 +89,7 @@ void FileThread::runHash(bool toRemove)
 
         QByteArray hash = readHash(fileName);
         if(hash.isEmpty()) continue;
+        emit currentFileChanged(fileName);
         stepHash ++;
 
         if(toRemove && map.contains(hash)) // Удаление дубликатов из известных
@@ -112,6 +113,7 @@ void FileThread::quickRemove()
     for(QString name:files){
         if(breaked) break;
         while(sleeped) msleep(1);
+        emit currentFileChanged(name);
         stepHash++;
 
         // поиск файла такого размера
@@ -170,7 +172,7 @@ void FileThread::save()
         buf += QString().sprintf(" %llu\n", (quint64)v.value());
     }
 
-    QFile out(outFile);
+    QFile out(lastFile);
 
     // Сохранение резервной копии
     if(out.exists() && out.size() && out.size()!=buf.size()){
@@ -194,6 +196,7 @@ void FileThread::readHashMap()
     stepHash = 0;
 
     QFile file(outFile);
+    lastFile = outFile;
 
     if(!file.open(QIODevice::ReadOnly)) return;
 

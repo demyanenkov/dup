@@ -5,6 +5,7 @@
 # 2017-09-06 Удаление в карзину под виндами
 # 2017-09-13 bugfix быстрое удаление дублей (insertMulti)
 # 2018-06-23 Список настроек
+# 2018-06-24 Перемещение в списке, текущий файл
 
 QT       += core gui
 
@@ -12,7 +13,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET   = dup
 TEMPLATE = app
-VERSION  = 0.3
+VERSION  = 0.4
 
 SOURCES += main.cpp mainwindow.cpp filethread.cpp
 HEADERS += mainwindow.h filethread.h
